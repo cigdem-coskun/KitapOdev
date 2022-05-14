@@ -1,0 +1,85 @@
+﻿@model IEnumerable<KitapModel>
+
+@{
+    ViewData["Title"] = "Kitap Listesi";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (TempData["Mesaj"] != null)
+{
+    <p class="bg-success text-white">
+        @TempData["Mesaj"]
+    </p>
+}
+
+<p>
+    <a asp-action="Create">Yeni Kitap</a>
+</p>
+
+<table id="urunler" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Adi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YazarAdiSoyadi)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.StokMiktari)
+            </th>
+         
+            <th>
+                @Html.DisplayNameFor(model => model.Aciklamasi)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adi)
+                    
+                </td>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.YazarAdiSoyadi)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.StokMiktari)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aciklamasi)
+                    
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Detay</a>&nbsp;|&nbsp;
+                    <a asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>&nbsp;|&nbsp;
+                    <a asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <link rel="stylesheet" href="/lib/datatables/css/jquery.dataTables.min.css" />
+    <script src="/lib/datatables/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#urunler').DataTable(
+            {
+                language : {
+                    url: "/json/ datatablesTurkish.json"
+                }
+            });
+        });
+    </script>
+}
